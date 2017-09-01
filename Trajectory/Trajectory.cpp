@@ -4,6 +4,7 @@
 #include <iostream>
 #include <cmath>
 #include <stdlib.h>
+#include <fstream>
 
 using namespace std;
 
@@ -17,6 +18,8 @@ int mainMenu;
 //Function prototype
 void notation();
 void finalPosition();
+void distanceTraveled(double velocity, double angle, double acceleration, double y0);
+
 
 void menu() {
 	
@@ -76,6 +79,10 @@ void notation() {
 void finalPosition() {
 	int choice;
 	double velocity;
+	double angle;
+	double acceleration;
+	double y0;
+	
 	cout << "Press 1 for distance traveled" << endl;
 	cout << "Press 2 for time of flight" << endl;
 	cout << "Press 3 for Angle of reach" << endl;
@@ -90,7 +97,37 @@ void finalPosition() {
 			cin >> velocity;
 			
 			cout << "Please enter the angle" << endl;
+			cin >> angle;
+			
+			cout << "Please enter the gravitational acceleration" << endl;
+			cin >> acceleration;
+			
+			cout << "Please enter the initial height of the projectile" << endl;
+			cin >> y0;
+			
+			distanceTraveled( velocity,  angle,  acceleration, y0);
+			
+			break;
+	
+		case 2:
+			
 			break;
 	}
+}	
+void distanceTraveled(double velocity, double angle, double acceleration, double y0) {
+	double firstPart = ( velocity * cos(angle));
+	double secondPart = velocity * sin(angle) + sqrt(pow(velocity * sin(angle),2 ) + 2 * acceleration * y0);
+	
+	double answer = firstPart * secondPart;
+	
+	cout << "The answer is " << answer << endl;
+	cout << "Writing the result to distanceTravel.txt" << endl;
+	
+	ofstream myfile;
+	myfile.open("distanceTravel.txt");
+	myfile << "The answer to the distance traveled: " << answer << endl;
+	myfile.close(); 
+	
 }
+
 
