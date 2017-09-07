@@ -19,7 +19,8 @@ int mainMenu;
 void notation();
 void finalPosition();
 void distanceTraveled(double velocity, double angle, double acceleration, double y0);
-
+void timeOfFlight(double distance, double veolocity, double angle);
+void fileWriting(string fileName, double answer);
 
 void menu() {
 	
@@ -82,6 +83,7 @@ void finalPosition() {
 	double angle;
 	double acceleration;
 	double y0;
+	double distance;
 	
 	cout << "Press 1 for distance traveled" << endl;
 	cout << "Press 2 for time of flight" << endl;
@@ -110,6 +112,17 @@ void finalPosition() {
 			break;
 	
 		case 2:
+			cout << "The forumula is :" << endl;
+			cout << "t = d/vcos" << theta << "/g" << endl;
+			
+			cout << "Please enter the distance traveled" << endl;
+			cin >> distance;
+			
+			cout << "Please enter the velocity at which the projectile is launched" << endl;
+			cin >> velocity;
+			
+			cout << "Please enter the angle" << endl;
+			cin >> angle;
 			
 			break;
 	}
@@ -123,11 +136,33 @@ void distanceTraveled(double velocity, double angle, double acceleration, double
 	cout << "The answer is " << answer << endl;
 	cout << "Writing the result to distanceTravel.txt" << endl;
 	
-	ofstream myfile;
-	myfile.open("distanceTravel.txt");
-	myfile << "The answer to the distance traveled: " << answer << endl;
-	myfile.close(); 
-	
+	fileWriting("distanceTraveled", answer);
+	cout << "Press 77 to return to the main menu" << endl;
+	cout << "Press q to exit the program" << endl;
+	cin >> mainMenu;
+	switch (mainMenu) {
+		case 77:
+			cout << "Returning to the main menu" << endl;
+			main();
+			break;
+		case 'q':
+			exit(EXIT_SUCCESS);
+			break;
+			
+	}
 }
+void timeOfFlight(double distance, double veolocity, double angle){
+	doube answer = distance / (velocity * cos(angle));
+	cout << "The answer is " << answer << endl;
+	cout << "Writing the result to timeOfFlight.txt" << endl;
+}
+
+void fileWriting(string fileName, double answer) {
+	ofstream myfile;
+	myfile.open(fileName + ".txt");
+	myfile << "The answer to the " << fileName << ": " << answer << endl;
+	myfile.close(); 
+}
+
 
 
